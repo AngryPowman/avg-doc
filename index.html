@@ -219,32 +219,57 @@
         <ul class="search-results"></ul>
       <div id="toc" class="toc-list-h1">
           <li>
-            <a href="#" class="toc-h1 toc-link" data-title="介绍">介绍</a>
+            <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
+          </li>
+          <li>
+            <a href="#architecture" class="toc-h1 toc-link" data-title="Architecture">Architecture</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#jianjian" class="toc-h2 toc-link" data-title="介绍">jianjian</a>
+                    <a href="#scripting" class="toc-h2 toc-link" data-title="Architecture">Scripting</a>
                   </li>
               </ul>
           </li>
           <li>
-            <a href="#-2" class="toc-h1 toc-link" data-title="整体架构">整体架构</a>
-          </li>
-          <li>
-            <a href="#-3" class="toc-h1 toc-link" data-title="脚本运行机制">脚本运行机制</a>
+            <a href="#api" class="toc-h1 toc-link" data-title="API">API</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#get-all-kittens" class="toc-h2 toc-link" data-title="脚本运行机制">Get All Kittens</a>
+                    <a href="#dialogue" class="toc-h2 toc-link" data-title="API">Dialogue</a>
                   </li>
                   <li>
-                    <a href="#get-a-specific-kitten" class="toc-h2 toc-link" data-title="脚本运行机制">Get a Specific Kitten</a>
+                    <a href="#sound" class="toc-h2 toc-link" data-title="API">Sound</a>
                   </li>
                   <li>
-                    <a href="#delete-a-specific-kitten" class="toc-h2 toc-link" data-title="脚本运行机制">Delete a Specific Kitten</a>
+                    <a href="#scene" class="toc-h2 toc-link" data-title="API">Scene</a>
+                  </li>
+                  <li>
+                    <a href="#data" class="toc-h2 toc-link" data-title="API">Data</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#advanced" class="toc-h1 toc-link" data-title="Advanced">Advanced</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#plugins" class="toc-h2 toc-link" data-title="Advanced">Plugins</a>
                   </li>
               </ul>
           </li>
           <li>
             <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#http-request" class="toc-h2 toc-link" data-title="Errors">HTTP Request</a>
+                  </li>
+                  <li>
+                    <a href="#query-parameters" class="toc-h2 toc-link" data-title="Errors">Query Parameters</a>
+                  </li>
+                  <li>
+                    <a href="#get-a-specific-kitten" class="toc-h2 toc-link" data-title="Errors">Get a Specific Kitten</a>
+                  </li>
+                  <li>
+                    <a href="#delete-a-specific-kitten" class="toc-h2 toc-link" data-title="Errors">Delete a Specific Kitten</a>
+                  </li>
+              </ul>
           </li>
       </div>
         <ul class="toc-footer">
@@ -255,7 +280,7 @@
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <h1 id=''>介绍</h1><h3 id='jianjian'>jianjian</h3>
+        <h1 id='introduction'>Introduction</h1>
 <p>欢迎使用AVG Engine文档。AVG Engine是一个跨平台、灵活、门槛低的文字游戏引擎。引擎拥有超多开放的游戏API，使游戏作者可以很轻易从零到一开发文字游戏。你可以用来制作有声小说，甚至可以基于更高级的插件机制开发定制化的游戏特性。</p>
 
 <p>AVG Engine的脚本又被成为AVScript, 是一门基于JavaScript的脚本语言。如果你有JavaScript基础，那么将很容易入门。即使你从来没有接触过编程语言，AVScript对于你而言也十分基础，简单易上手。</p>
@@ -282,7 +307,7 @@
 
 <span class="c1">// 隐藏对话框</span>
 <span class="nx">api</span><span class="p">.</span><span class="nx">hideText</span><span class="p">();</span>
-</code></pre><h1 id='-2'>整体架构</h1>
+</code></pre><h1 id='architecture'>Architecture</h1>
 <p><code>AVG Engine</code> 总共分为两个部分。分别是 <code>avg.engine</code> 和 <code>avg.renderer</code>. </p>
 
 <p><code>avg.engine</code> 该部分主要实现了整个游戏引擎的数据以及状态管理功能。并且所有的游戏API接口原型都在这部分进行暴露。</p>
@@ -290,9 +315,73 @@
 <p><code>avg.renderer</code> 是一个对 <code>avg.engine</code> 的实现部分。它依赖<code>avg.engine</code>的类型定义以及数据管理，并负责了游戏的绘图、渲染、API详细实现。游戏的前端效果都在这部分进行。</p>
 
 <aside class="notice">
-因为两个项目的剥离，使得渲染和数据的耦合降低。也满足更高级的开发者基于`avg.engine`开发出更好的renderer, 定制自己的前端实现。
+因为两个项目的剥离，使得渲染和数据的耦合降低。也满足更高级的开发者基于avg.engine开发renderer, 定制自己的前端实现。
 </aside>
-<h1 id='-3'>脚本运行机制</h1><h2 id='get-all-kittens'>Get All Kittens</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<h2 id='scripting'>Scripting</h2>
+<p>脚本系统是引擎为游戏逻辑提供的基础API，这些API包括对话处理、流程控制、声音处理、图像处理、场景处理、变量处理、存档处理等部分。</p>
+
+<p>脚本系统在运行的时候会预先从游戏的脚本目录（默认情况下位于<code>assets/data/scripts</code>）下读取入口脚本文件（默认是<code>start.avs</code>）。具体的执行流程如下：</p>
+
+<p><code>IO -&gt; Transpiler -&gt; VM -&gt; Engine</code></p>
+<h1 id='api'>API</h1><h2 id='dialogue'>Dialogue</h2>
+<p>对话处理是AVG最常用的功能之一。这部分的接口包括对话框的展示与隐藏、立绘效果处理等。</p>
+<h2 id='sound'>Sound</h2><h2 id='scene'>Scene</h2><h2 id='data'>Data</h2><h1 id='advanced'>Advanced</h1><h2 id='plugins'>Plugins</h2><h1 id='errors'>Errors</h1>
+<aside class="notice">This error section is stored in a separate file in `includes/_errors.md`. Slate allows you to optionally separate out your docs into many files...just save them to the `includes` folder and add them to the top of your `index.md`'s frontmatter. Files are included in the order listed.</aside>
+
+<p>The Kittn API uses the following error codes:</p>
+
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>400</td>
+<td>Bad Request -- Your request sucks.</td>
+</tr>
+<tr>
+<td>401</td>
+<td>Unauthorized -- Your API key is wrong.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Forbidden -- The kitten requested is hidden for administrators only.</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Not Found -- The specified kitten could not be found.</td>
+</tr>
+<tr>
+<td>405</td>
+<td>Method Not Allowed -- You tried to access a kitten with an invalid method.</td>
+</tr>
+<tr>
+<td>406</td>
+<td>Not Acceptable -- You requested a format that isn&#39;t json.</td>
+</tr>
+<tr>
+<td>410</td>
+<td>Gone -- The kitten requested has been removed from our servers.</td>
+</tr>
+<tr>
+<td>418</td>
+<td>I&#39;m a teapot.</td>
+</tr>
+<tr>
+<td>429</td>
+<td>Too Many Requests -- You&#39;re requesting too many kittens! Slow down!</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal Server Error -- We had a problem with our server. Try again later.</td>
+</tr>
+<tr>
+<td>503</td>
+<td>Service Unavailable -- We&#39;re temporarily offline for maintenance. Please try again later.</td>
+</tr>
+</tbody></table>
+<pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
 
 <span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
 <span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span>
@@ -433,62 +522,6 @@ Remember — a happy kitten is an authenticated kitten!
 <tr>
 <td>ID</td>
 <td>The ID of the kitten to delete</td>
-</tr>
-</tbody></table>
-<h1 id='errors'>Errors</h1>
-<aside class="notice">This error section is stored in a separate file in `includes/_errors.md`. Slate allows you to optionally separate out your docs into many files...just save them to the `includes` folder and add them to the top of your `index.md`'s frontmatter. Files are included in the order listed.</aside>
-
-<p>The Kittn API uses the following error codes:</p>
-
-<table><thead>
-<tr>
-<th>Error Code</th>
-<th>Meaning</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>400</td>
-<td>Bad Request -- Your request sucks.</td>
-</tr>
-<tr>
-<td>401</td>
-<td>Unauthorized -- Your API key is wrong.</td>
-</tr>
-<tr>
-<td>403</td>
-<td>Forbidden -- The kitten requested is hidden for administrators only.</td>
-</tr>
-<tr>
-<td>404</td>
-<td>Not Found -- The specified kitten could not be found.</td>
-</tr>
-<tr>
-<td>405</td>
-<td>Method Not Allowed -- You tried to access a kitten with an invalid method.</td>
-</tr>
-<tr>
-<td>406</td>
-<td>Not Acceptable -- You requested a format that isn&#39;t json.</td>
-</tr>
-<tr>
-<td>410</td>
-<td>Gone -- The kitten requested has been removed from our servers.</td>
-</tr>
-<tr>
-<td>418</td>
-<td>I&#39;m a teapot.</td>
-</tr>
-<tr>
-<td>429</td>
-<td>Too Many Requests -- You&#39;re requesting too many kittens! Slow down!</td>
-</tr>
-<tr>
-<td>500</td>
-<td>Internal Server Error -- We had a problem with our server. Try again later.</td>
-</tr>
-<tr>
-<td>503</td>
-<td>Service Unavailable -- We&#39;re temporarily offline for maintenance. Please try again later.</td>
 </tr>
 </tbody></table>
 
