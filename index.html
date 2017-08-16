@@ -256,7 +256,6 @@
           </li>
       </div>
         <ul class="toc-footer">
-            <li><a href='#'>Sign Up for a Developer Key</a></li>
             <li><a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a></li>
         </ul>
     </div>
@@ -308,7 +307,145 @@
 <p><code>IO -&gt; Transpiler -&gt; VM -&gt; Engine</code></p>
 <h1 id='api'>API</h1><h2 id='dialogue'>Dialogue</h2>
 <p>对话处理是AVG最常用的功能之一。这部分的接口包括对话框的展示与隐藏、立绘效果处理等。</p>
-<h2 id='sound'>Sound</h2><h2 id='scene'>Scene</h2><h2 id='data'>Data</h2><h1 id='advanced'>Advanced</h1><h2 id='plugins'>Plugins</h2>
+<h3 id=''>显示对话</h3>
+<p>显示对话框并展示一段对话文本。</p>
+
+<p><code>api.showText(text, [options]))</code></p>
+
+<ul>
+<li><code>text</code> - 要显示的文本 </li>
+<li><code>options</code> - 扩展选项</li>
+</ul>
+<h4 id='options'>Options</h4>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>name</td>
+<td>当前说话角色的名字，为空则不显示</td>
+</tr>
+<tr>
+<td>avatar</td>
+<td>角色的立绘</td>
+</tr>
+</tbody></table>
+<h3 id='-2'>隐藏对话框</h3>
+<p>显示对话框并展示一段对话文本。</p>
+
+<p><code>api.hideText([options]))</code></p>
+
+<ul>
+<li><code>options</code> - 扩展选项</li>
+</ul>
+<h4 id='options-2'>Options</h4>
+<p>No options.</p>
+<h3 id='example'>Example</h3><pre class="highlight javascript"><code><span class="c1">// 简单对话例子</span>
+<span class="nx">api</span><span class="p">.</span><span class="nx">showText</span><span class="p">(</span><span class="s1">'这是……哪里……'</span><span class="p">);</span>
+<span class="nx">api</span><span class="p">.</span><span class="nx">showText</span><span class="p">(</span><span class="s1">'看起来貌似是个例子。'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="s1">'士兵'</span> 
+<span class="p">});</span>
+
+<span class="nx">api</span><span class="p">.</span><span class="nx">showText</span><span class="p">(</span><span class="s1">'貌似这样会出现一个立绘图片耶！'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="s1">'士兵'</span><span class="p">,</span>
+    <span class="na">avatar</span><span class="p">:</span> <span class="s1">'assets/graphics/characters/example.png'</span>
+<span class="p">});</span>
+
+<span class="nx">api</span><span class="p">.</span><span class="nx">hideText</span><span class="p">();</span>
+
+</code></pre><h2 id='sound'>Sound</h2>
+<p>用于控制游戏音频的模块。包括背景音乐、音效、语音的播放与暂停。</p>
+<h3 id='-3'>播放背景音乐</h3>
+<p>api.playBGM(file, [options])</p>
+
+<ul>
+<li><code>file</code> - 要播放的背景音乐文件</li>
+<li><code>options</code> - 扩展选项</li>
+</ul>
+<h4 id='options-3'>Options</h4>
+<p>No options.</p>
+<h3 id='-4'>停止背景音乐</h3>
+<p>api.stopBGM([options])</p>
+
+<ul>
+<li><code>options</code> - 扩展选项</li>
+</ul>
+<h4 id='options-4'>Options</h4>
+<p>No options.</p>
+<h3 id='example-2'>Example</h3><pre class="highlight javascript"><code><span class="c1">// 背景音乐播放与停止</span>
+<span class="nx">api</span><span class="p">.</span><span class="nx">playBGM</span><span class="p">(</span><span class="s1">'assets/audio/bgm/title.mp3'</span><span class="p">);</span>
+<span class="nx">api</span><span class="p">.</span><span class="nx">stopBGM</span><span class="p">();</span>
+</code></pre><h2 id='scene'>Scene</h2>
+<p>用于控制场景的加载、跳转、场景过渡、天气特效的模块。</p>
+<h3 id='-5'>加载场景</h3>
+<p>api.loadScene(file, [options])</p>
+
+<ul>
+<li><code>file</code> - 要加载的场景背景图片</li>
+<li><code>options</code> - 扩展选项</li>
+</ul>
+<h4 id='options-5'>Options</h4>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>duration</td>
+<td>场景背景图片显示特效的持续时间</td>
+</tr>
+<tr>
+<td>block</td>
+<td>是否堵塞直至场景图片特效完成</td>
+</tr>
+</tbody></table>
+<h3 id='example-3'>Example</h3><pre class="highlight javascript"><code><span class="c1">// 加载一个场景</span>
+<span class="nx">api</span><span class="p">.</span><span class="nx">loadScene</span><span class="p">(</span><span class="s1">'assets/graphics/backgrounds/demo-moon.jpg'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">duration</span><span class="p">:</span> <span class="mi">1400</span><span class="p">,</span>
+    <span class="na">block</span><span class="p">:</span> <span class="kc">false</span> 
+<span class="p">});</span>
+</code></pre><h2 id='data'>Data</h2>
+<p>控制存档、变量、流程控制等相关操作。</p>
+<h3 id='-6'>设置变量</h3>
+<p>设置一个变量，并且该变量会在存档时保存。通常用于储存角色好感度或需要持久储存的数值。变量值可以是任意类型，甚至是<code>Json Object</code>.</p>
+
+<p><strong>注意</strong>：如果设置的变量名存在，则值会覆盖。</p>
+
+<p>api.setVariable(name, value)</p>
+
+<ul>
+<li><code>name</code> - 变量名</li>
+<li><code>value</code> - 变量值</li>
+</ul>
+<h3 id='-7'>读取变量</h3>
+<p>根据变量名读取变量的值，如果变量不存在，则返回空字符串。</p>
+
+<p>api.getVariable(name): any</p>
+
+<ul>
+<li><code>name</code> - 变量名</li>
+<li><code>{return}</code> - 返回变量的值</li>
+</ul>
+<h3 id='example-4'>Example</h3><pre class="highlight javascript"><code><span class="c1">// 设置变量</span>
+<span class="nx">api</span><span class="p">.</span><span class="nx">setVariable</span><span class="p">(</span><span class="s1">'money'</span><span class="p">,</span> <span class="mi">1000</span><span class="p">);</span>
+<span class="nx">api</span><span class="p">.</span><span class="nx">setVariable</span><span class="p">(</span><span class="s1">'mans_name'</span><span class="p">,</span> <span class="s1">'张三'</span><span class="p">);</span>
+
+<span class="c1">// 读取变量</span>
+<span class="kd">let</span> <span class="nx">money</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">getVariable</span><span class="p">(</span><span class="s1">'money'</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">money</span> <span class="o">===</span> <span class="mi">1000</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">api</span><span class="p">.</span><span class="nx">setVariable</span><span class="p">(</span><span class="s1">'money'</span><span class="p">,</span> <span class="mi">500</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// 设置一个变量的值为一个Json Object</span>
+<span class="nx">api</span><span class="p">.</span><span class="nx">setVariable</span><span class="p">(</span><span class="s1">'char_data'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="nx">api</span><span class="p">.</span><span class="nx">getVariable</span><span class="p">(</span><span class="s1">'mans_name'</span><span class="p">),</span>
+    <span class="na">money</span><span class="p">:</span> <span class="nx">api</span><span class="p">.</span><span class="nx">getVariable</span><span class="p">(</span><span class="s1">'money'</span><span class="p">)</span>
+<span class="p">});</span>
+
+</code></pre><h1 id='advanced'>Advanced</h1><h2 id='plugins'>Plugins</h2>
       </div>
       <div class="dark-box">
           <div class="lang-selector">
